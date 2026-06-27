@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crosshair Repository</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0a0a;
+    --surface:  #111111;
+    --border:   #222222;
+    --accent:   #ffffff;
+    --muted:    #444444;
+    --text:     #cccccc;
+    --mono:     'Share Tech Mono', monospace;
+    --sans:     'Inter', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 48px 24px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  header h1 {
+    font-family: var(--mono);
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  header p {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    font-family: var(--mono);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: border-color 0.15s;
+  }
+
+  .card:hover {
+    border-color: #444;
+  }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #0d0d0d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .card-img img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    image-rendering: pixelated;
+  }
+
+  .card-body {
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-id {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 5px 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.1s, border-color 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover {
+    background: #1a1a1a;
+    border-color: #555;
+    color: var(--accent);
+  }
+
+  .copy-btn.copied {
+    border-color: #3a3a3a;
+    color: #888;
+  }
+
+  /* toast */
+  #toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 10px 20px;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>// Crosshair Repository</h1>
+  <p>20 crosshairs — click to copy decal id</p>
+</header>
+
+<div class="grid" id="grid"></div>
+<div id="toast"></div>
+
+<script>
+const crosshairs = [
+  { id: 1,  decal: "970416013",       url: "https://media.discordapp.net/attachments/1520545160558022668/1520545248265371841/image.png?ex=6a41959d&is=6a40441d&hm=f3f1d9719830c922122871924dace71a6fc6a16601847c171cea6e7157e65431&=&format=webp&quality=lossless&width=146&height=140" },
+  { id: 2,  decal: "6929587871",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545274877972520/image.png?ex=6a4195a3&is=6a404423&hm=22a84303190643bc345a64e2859a13e9613b3e0a06af76805e31fbb65c78e5c1&=&format=webp&quality=lossless&width=138&height=121" },
+  { id: 3,  decal: "2025732283",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545324907888650/image.png?ex=6a4195af&is=6a40442f&hm=b5cedcd85518b095695c7d4106a88647740084fcbfe85e2be917002b221a61ed&=&format=webp&quality=lossless&width=137&height=122" },
+  { id: 4,  decal: "12230015092",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520545660254814258/image.png?ex=6a4195ff&is=6a40447f&hm=e849e723f798b7b653dac84b85c1ac14710fe7dcc7aae22ed830ed4d83c1a3a4&=&format=webp&quality=lossless" },
+  { id: 5,  decal: "4852860078",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545748704297052/image.png?ex=6a419614&is=6a404494&hm=5186bbc6aae259525de134768ca7c791e94352fb5ebeef406803319b0f270b19&=&format=webp&quality=lossless" },
+  { id: 6,  decal: "12511153427",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520545836272976062/image.png?ex=6a419629&is=6a4044a9&hm=a8c70f4b99ff8f7e4020b61f207a945c612656421fd8a10ab6df72b58d3d0e8a&=&format=webp&quality=lossless" },
+  { id: 7,  decal: "6239892695",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545970356490331/image.png?ex=6a419649&is=6a4044c9&hm=ecfa53d18add195bef881cde9b6facb43ac689e5d4a190f701d05ef97ab038f7&=&format=webp&quality=lossless" },
+  { id: 8,  decal: "12572662746",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520546404899098816/image.png?ex=6a4196b1&is=6a404531&hm=ce36ef3b6f2643d78258f3f562cbfa23d77a34dbbaf260e3991943b04e5436bb&=&format=webp&quality=lossless" },
+  { id: 9,  decal: "7808856331",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520546622415704176/image.png?ex=6a4196e5&is=6a404565&hm=a689d47455f3507d6d573eef37b6b76ac18d78755886ac906cea478e3dbb337e&=&format=webp&quality=lossless" },
+  { id: 10, decal: "4845399440",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520546836363083777/image.png?ex=6a419718&is=6a404598&hm=82b0337c8317f899eb1d350509849dedad950ddea388c2db051fe26da3747a0e&=&format=webp&quality=lossless" },
+  { id: 11, decal: "5355104551",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547081138208929/image.png?ex=6a419752&is=6a4045d2&hm=c106068f99a89ae0c6faa2a1fffea2dbd8b6d8bafef00591574952aec76a24b6&=&format=webp&quality=lossless" },
+  { id: 12, decal: "3045911268",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547271320666172/image.png?ex=6a41977f&is=6a4045ff&hm=5347c76aef921d463fa8ae260b19a63ec6705e02dc33e5d936e06e49e1459cf7&=&format=webp&quality=lossless" },
+  { id: 13, decal: "973821236",       url: "https://media.discordapp.net/attachments/1520545160558022668/1520547383359045823/image.png?ex=6a41979a&is=6a40461a&hm=b5ea19cbf73048615e02c3677d8a2c82967c771e2a260824e0b8b269988ed409&=&format=webp&quality=lossless" },
+  { id: 14, decal: "7512257281",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547505723412540/image.png?ex=6a4197b7&is=6a404637&hm=4eedcab3487dd9652c52e75eaba92e17f7cdcc45ad25fba2c8de507291149e3f&=&format=webp&quality=lossless" },
+  { id: 15, decal: "6737091192",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547631078838292/image.png?ex=6a4197d5&is=6a404655&hm=486115055569385c722420caf2339535fe9c694dab1ada7f9ef045e74e53c557&=&format=webp&quality=lossless" },
+  { id: 16, decal: "5317446797",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547753355120830/image.png?ex=6a4197f2&is=6a404672&hm=cc11825a060916da38f6360a62f9374a600434f5d77935a9abaa463d5d57fb81&=&format=webp&quality=lossless" },
+  { id: 17, decal: "10717562048",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520547926206578800/image.png?ex=6a41981c&is=6a40469c&hm=fe5bdb98c2f730c1cf620b623a067bd43a405c5e3e08bc5b790bbe8452718911&=&format=webp&quality=lossless" },
+  { id: 18, decal: "120148944180986", url: "https://media.discordapp.net/attachments/1520545160558022668/1520548105580187799/image.png?ex=6a419846&is=6a4046c6&hm=45de8809439eca1e967a39d447a616f180aea69d714e749fdcc1eea616e6db5c&=&format=webp&quality=lossless" },
+  { id: 19, decal: "5356562193",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520548295695663114/image.png?ex=6a419874&is=6a4046f4&hm=5161e0f4b7580dd5516528b5999f7fae83c8bd2e709de7ea725a81179c23f22c&=&format=webp&quality=lossless" },
+  { id: 20, decal: "11726322336",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520549097986064444/image.png?ex=6a419933&is=6a4047b3&hm=560c6b53a2f0f21296716e318c9167900b40c4c73318fc2a7481dcb0faf9500b&=&format=webp&quality=lossless" },
+];
+
+const grid = document.getElementById('grid');
+const toast = document.getElementById('toast');
+let toastTimer;
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+function copyDecal(decal, btn) {
+  navigator.clipboard.writeText(decal).then(() => {
+    btn.textContent = 'copied!';
+    btn.classList.add('copied');
+    showToast(`copied: ${decal}`);
+    setTimeout(() => {
+      btn.textContent = 'copy id';
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+
+crosshairs.forEach(ch => {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  card.innerHTML = `
+    <div class="card-img">
+      <img src="${ch.url}" alt="crosshair ${ch.id}" loading="lazy">
+    </div>
+    <div class="card-body">
+      <span class="card-id">#${ch.id}</span>
+      <button class="copy-btn">copy id</button>
+    </div>
+  `;
+
+  card.querySelector('.copy-btn').addEventListener('click', function() {
+    copyDecal(ch.decal, this);
+  });
+
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
