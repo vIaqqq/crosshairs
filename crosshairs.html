@@ -130,7 +130,6 @@
     color: #888;
   }
 
-  /* toast */
   #toast {
     position: fixed;
     bottom: 32px;
@@ -167,26 +166,26 @@
 
 <script>
 const crosshairs = [
-  { id: 1,  decal: "970416013",       url: "https://media.discordapp.net/attachments/1520545160558022668/1520545248265371841/image.png?ex=6a41959d&is=6a40441d&hm=f3f1d9719830c922122871924dace71a6fc6a16601847c171cea6e7157e65431&=&format=webp&quality=lossless&width=146&height=140" },
-  { id: 2,  decal: "6929587871",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545274877972520/image.png?ex=6a4195a3&is=6a404423&hm=22a84303190643bc345a64e2859a13e9613b3e0a06af76805e31fbb65c78e5c1&=&format=webp&quality=lossless&width=138&height=121" },
-  { id: 3,  decal: "2025732283",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545324907888650/image.png?ex=6a4195af&is=6a40442f&hm=b5cedcd85518b095695c7d4106a88647740084fcbfe85e2be917002b221a61ed&=&format=webp&quality=lossless&width=137&height=122" },
-  { id: 4,  decal: "12230015092",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520545660254814258/image.png?ex=6a4195ff&is=6a40447f&hm=e849e723f798b7b653dac84b85c1ac14710fe7dcc7aae22ed830ed4d83c1a3a4&=&format=webp&quality=lossless" },
-  { id: 5,  decal: "4852860078",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545748704297052/image.png?ex=6a419614&is=6a404494&hm=5186bbc6aae259525de134768ca7c791e94352fb5ebeef406803319b0f270b19&=&format=webp&quality=lossless" },
-  { id: 6,  decal: "12511153427",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520545836272976062/image.png?ex=6a419629&is=6a4044a9&hm=a8c70f4b99ff8f7e4020b61f207a945c612656421fd8a10ab6df72b58d3d0e8a&=&format=webp&quality=lossless" },
-  { id: 7,  decal: "6239892695",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520545970356490331/image.png?ex=6a419649&is=6a4044c9&hm=ecfa53d18add195bef881cde9b6facb43ac689e5d4a190f701d05ef97ab038f7&=&format=webp&quality=lossless" },
-  { id: 8,  decal: "12572662746",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520546404899098816/image.png?ex=6a4196b1&is=6a404531&hm=ce36ef3b6f2643d78258f3f562cbfa23d77a34dbbaf260e3991943b04e5436bb&=&format=webp&quality=lossless" },
-  { id: 9,  decal: "7808856331",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520546622415704176/image.png?ex=6a4196e5&is=6a404565&hm=a689d47455f3507d6d573eef37b6b76ac18d78755886ac906cea478e3dbb337e&=&format=webp&quality=lossless" },
-  { id: 10, decal: "4845399440",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520546836363083777/image.png?ex=6a419718&is=6a404598&hm=82b0337c8317f899eb1d350509849dedad950ddea388c2db051fe26da3747a0e&=&format=webp&quality=lossless" },
-  { id: 11, decal: "5355104551",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547081138208929/image.png?ex=6a419752&is=6a4045d2&hm=c106068f99a89ae0c6faa2a1fffea2dbd8b6d8bafef00591574952aec76a24b6&=&format=webp&quality=lossless" },
-  { id: 12, decal: "3045911268",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547271320666172/image.png?ex=6a41977f&is=6a4045ff&hm=5347c76aef921d463fa8ae260b19a63ec6705e02dc33e5d936e06e49e1459cf7&=&format=webp&quality=lossless" },
-  { id: 13, decal: "973821236",       url: "https://media.discordapp.net/attachments/1520545160558022668/1520547383359045823/image.png?ex=6a41979a&is=6a40461a&hm=b5ea19cbf73048615e02c3677d8a2c82967c771e2a260824e0b8b269988ed409&=&format=webp&quality=lossless" },
-  { id: 14, decal: "7512257281",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547505723412540/image.png?ex=6a4197b7&is=6a404637&hm=4eedcab3487dd9652c52e75eaba92e17f7cdcc45ad25fba2c8de507291149e3f&=&format=webp&quality=lossless" },
-  { id: 15, decal: "6737091192",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547631078838292/image.png?ex=6a4197d5&is=6a404655&hm=486115055569385c722420caf2339535fe9c694dab1ada7f9ef045e74e53c557&=&format=webp&quality=lossless" },
-  { id: 16, decal: "5317446797",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520547753355120830/image.png?ex=6a4197f2&is=6a404672&hm=cc11825a060916da38f6360a62f9374a600434f5d77935a9abaa463d5d57fb81&=&format=webp&quality=lossless" },
-  { id: 17, decal: "10717562048",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520547926206578800/image.png?ex=6a41981c&is=6a40469c&hm=fe5bdb98c2f730c1cf620b623a067bd43a405c5e3e08bc5b790bbe8452718911&=&format=webp&quality=lossless" },
-  { id: 18, decal: "120148944180986", url: "https://media.discordapp.net/attachments/1520545160558022668/1520548105580187799/image.png?ex=6a419846&is=6a4046c6&hm=45de8809439eca1e967a39d447a616f180aea69d714e749fdcc1eea616e6db5c&=&format=webp&quality=lossless" },
-  { id: 19, decal: "5356562193",      url: "https://media.discordapp.net/attachments/1520545160558022668/1520548295695663114/image.png?ex=6a419874&is=6a4046f4&hm=5161e0f4b7580dd5516528b5999f7fae83c8bd2e709de7ea725a81179c23f22c&=&format=webp&quality=lossless" },
-  { id: 20, decal: "11726322336",     url: "https://media.discordapp.net/attachments/1520545160558022668/1520549097986064444/image.png?ex=6a419933&is=6a4047b3&hm=560c6b53a2f0f21296716e318c9167900b40c4c73318fc2a7481dcb0faf9500b&=&format=webp&quality=lossless" },
+  { id: 1,  decal: "970416013",       url: "./970416013%20.png" },
+  { id: 2,  decal: "6929587871",      url: "./6929587871.png" },
+  { id: 3,  decal: "2025732283",      url: "./2025732283.png" },
+  { id: 4,  decal: "12230015092",     url: "./12230015092.png" },
+  { id: 5,  decal: "4852860078",      url: "./4852860078.png" },
+  { id: 6,  decal: "12511153427",     url: "./12511153427.png" },
+  { id: 7,  decal: "6239892695",      url: "./6239892695.png" },
+  { id: 8,  decal: "12572662746",     url: "./12572662746.png" },
+  { id: 9,  decal: "7808856331",      url: "./7808856331.png" },
+  { id: 10, decal: "4845399440",      url: "./4845399440.png" },
+  { id: 11, decal: "5355104551",      url: "./5355104551%20(vlaq).png" },
+  { id: 12, decal: "3045911268",      url: "./3045911268.png" },
+  { id: 13, decal: "973821236",       url: "./973821236.png" },
+  { id: 14, decal: "7512257281",      url: "./7512257281.png" },
+  { id: 15, decal: "6737091192",      url: "./6737091192.png" },
+  { id: 16, decal: "5317446797",      url: "./5317446797.png" },
+  { id: 17, decal: "10717562048",     url: "./10717562048.png" },
+  { id: 18, decal: "120148944180986", url: "./120148944180986.png" },
+  { id: 19, decal: "5356562193",      url: "./5356562193.png" },
+  { id: 20, decal: "11726322336",     url: "./11726322336.png" },
 ];
 
 const grid = document.getElementById('grid');
